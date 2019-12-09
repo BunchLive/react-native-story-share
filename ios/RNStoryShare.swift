@@ -130,6 +130,7 @@ class RNStoryShare: NSObject{
     func _shareToSnapchat(_ snap: SCSDKSnapContent,
                               stickerAsset: URL? = nil,
                               attributionLink: String,
+                              caption: String,
                               type: String,
                               resolve: @escaping RCTPromiseResolveBlock,
                               reject: RCTPromiseRejectBlock)
@@ -137,6 +138,10 @@ class RNStoryShare: NSObject{
         do {
             if(attributionLink != ""){
                 snap.attachmentUrl = attributionLink
+            }
+            
+            if(caption != ""){
+                snap.caption = caption
             }
             
             if(stickerAsset != nil){
@@ -177,6 +182,7 @@ class RNStoryShare: NSObject{
             let backgroundAsset = RCTConvert.nsurl(config["backgroundAsset"])
             let stickerAsset = RCTConvert.nsurl(config["stickerAsset"])
             let attributionLink: String = RCTConvert.nsString(config["attributionLink"]) ?? ""
+            let caption: String = RCTConvert.nsString(config["caption"]) ?? ""
             let type: String = RCTConvert.nsString(config["type"] ?? FILE)
             
             let snap: SCSDKSnapContent
@@ -199,7 +205,7 @@ class RNStoryShare: NSObject{
                 snap = SCSDKNoSnapContent()
             }
             
-            _shareToSnapchat(snap,stickerAsset: stickerAsset, attributionLink: attributionLink, type: type, resolve: resolve, reject: reject)
+            _shareToSnapchat(snap,stickerAsset: stickerAsset, attributionLink: attributionLink, caption: caption, type: type, resolve: resolve, reject: reject)
         } catch {
             reject(domain, error.localizedDescription, error)
         }
