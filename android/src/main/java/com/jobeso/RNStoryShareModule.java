@@ -333,7 +333,7 @@ public class RNStoryShareModule extends ReactContextBaseJavaModule {
       }
 
       if (caption != null) {
-        snapContent.caption(caption);
+        snapContent.setCaptionText(caption);
       }
 
       snapCreativeKitApi.send(snapContent);
