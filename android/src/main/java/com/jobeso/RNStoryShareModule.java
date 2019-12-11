@@ -256,8 +256,8 @@ public class RNStoryShareModule extends ReactContextBaseJavaModule {
       }
 
       case FILE: {
-        throw new Error(ERROR_TYPE_NOT_SUPPORTED);
-
+        // throw new Error(ERROR_TYPE_NOT_SUPPORTED);
+        
         // TODO implement
         // if (ContextCompat.checkSelfPermission(getCurrentActivity(),
         // Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -271,10 +271,10 @@ public class RNStoryShareModule extends ReactContextBaseJavaModule {
         // copyFile(file, backgroundFile);
         // }
         //
-        // if(stickerAsset != null){
-        // stickerFile = new File(stickerAsset);
-        // }
-        // break;
+        if (stickerAsset != null) {
+          stickerFile = new File(stickerAsset);
+        }
+        break;
       }
 
       default: {
