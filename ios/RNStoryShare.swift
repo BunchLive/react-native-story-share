@@ -132,6 +132,8 @@ class RNStoryShare: NSObject{
                               attributionLink: String,
                               caption: String,
                               type: String,
+                              width: Double,
+                              height: Double,
                               resolve: @escaping RCTPromiseResolveBlock,
                               reject: RCTPromiseRejectBlock)
     {
@@ -153,6 +155,8 @@ class RNStoryShare: NSObject{
                     let stickerImage = UIImage(data: data)
                     
                     sticker = SCSDKSnapSticker(stickerImage: stickerImage!)
+                    sticker.width = CGFloat(width)
+                    sticker.height = CGFloat(height)
                 } else {
                     sticker = SCSDKSnapSticker(stickerUrl: stickerAsset!, isAnimated: false)
                 }
@@ -184,6 +188,8 @@ class RNStoryShare: NSObject{
             let attributionLink: String = RCTConvert.nsString(config["attributionLink"]) ?? ""
             let caption: String = RCTConvert.nsString(config["caption"]) ?? ""
             let type: String = RCTConvert.nsString(config["type"] ?? FILE)
+            let width: Double = RCTConvert.double(config["width"] ?? 400)
+            let height: Double = RCTConvert.double(config["height"] ?? 292)
             
             let snap: SCSDKSnapContent
             
@@ -205,7 +211,7 @@ class RNStoryShare: NSObject{
                 snap = SCSDKNoSnapContent()
             }
             
-            _shareToSnapchat(snap,stickerAsset: stickerAsset, attributionLink: attributionLink, caption: caption, type: type, resolve: resolve, reject: reject)
+            _shareToSnapchat(snap,stickerAsset: stickerAsset, attributionLink: attributionLink, caption: caption, type: type, width: width, height: height, resolve: resolve, reject: reject)
         } catch {
             reject(domain, error.localizedDescription, error)
         }
