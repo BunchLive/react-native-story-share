@@ -150,9 +150,16 @@ class RNStoryShare: NSObject{
                 if(type == BASE64){
                     let data = try Data(contentsOf: stickerAsset!,
                                         options: NSData.ReadingOptions(rawValue: 0))
-                    let stickerImage = UIImage(data: data)
-                    
-                    sticker = SCSDKSnapSticker(stickerImage: stickerImage!)
+                  guard let stickerImage = UIImage(data: data) else {
+                    let error = NSError(domain: domain,
+                                        code: 404,
+                                        userInfo: [NSLocalizedDescriptionKey :  "Bad Base64 Image"])
+                    reject(domain, error.localizedDescription, error)
+                    return
+                  }
+                  sticker = SCSDKSnapSticker(stickerImage: stickerImage)
+                  sticker.width = stickerImage.size.width / UIScreen.main.scale
+                  sticker.height = stickerImage.size.height / UIScreen.main.scale  
                 } else {
                     sticker = SCSDKSnapSticker(stickerUrl: stickerAsset!, isAnimated: false)
                 }
